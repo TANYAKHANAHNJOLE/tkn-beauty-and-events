@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TKNA Beauty & Events | A Limitless Beauty Brand</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --panel-bg: #121212;
+            --accent-gold: #d4af37;
+            --accent-gold-hover: #f3e5ab;
+            --text-main: #f5f5f4;
+            --text-muted: #a8a29e;
+            --border-color: #292524;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: rgba(10, 10, 10, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .promo-bar {
+            background-color: var(--accent-gold);
+            color: #000;
+            text-align: center;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+        }
+
+        .brand-logo {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .brand-logo h1 {
+            color: var(--accent-gold);
+            font-size: 2rem;
+            letter-spacing: 4px;
+            font-weight: bold;
+            line-height: 1.1;
+        }
+
+        .brand-logo p {
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 20px;
+        }
+
+        .menu-btn, .bag-btn {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.2rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .menu-btn:hover, .bag-btn:hover {
+            color: var(--accent-gold);
+        }
+
+        /* Slide Out Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 320px;
+            height: 100%;
+            background-color: var(--panel-bg);
+            border-left: 1px solid var(--border-color);
+            z-index: 2000;
+            padding: 40px 24px;
+            transition: right 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .close-menu-btn {
+            align-self: flex-end;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .menu-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .menu-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            transition: color 0.2s;
+        }
+
+        .menu-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1500;
+            display: none;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 70vh;
+            background: linear-gradient(rgba(10,10,10,0.4), rgba(10,10,10,0.85)), url('https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200&auto=format&fit=crop') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h2 {
+            font-size: 2.2rem;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            max-width: 600px;
+            font-style: italic;
+        }
+
+        .hero p {
+            color: var(--accent-gold);
+            font-size: 0.95rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .hero-btn {
+            background-color: transparent;
+            color: var(--accent-gold);
+            border: 2px solid var(--accent-gold);
+            padding: 12px 30px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .hero-btn:hover {
+            background-color: var(--accent-gold);
+            color: #000;
+        }
+
+        /* Filter Switch Bar */
+        .sticky-filter-container {
+            background-color: var(--bg-color);
+            padding: 20px 10px;
+            position: sticky;
+            top: 75px;
+            z-index: 900;
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none;
+        }
+        .sticky-filter-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: flex-start;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 12px;
+            padding: 0 10px;
+        }
+
+        .filter-tag {
+            background-color: var(--panel-bg);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 8px 18px;
+            font-size: 0.85rem;
+            border-radius: 20px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .filter-tag.active {
+            background-color: var(--accent-gold);
+            color: #000;
+            border-color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        /* Catalog Layout */
+        .catalog-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .category-header {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            border-left: 3px solid var(--accent-gold);
+            padding-left: 12px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        @media (min-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .product-card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Carousel inside Card */
+        .card-carousel {
+            position: relative;
+            width: 100%;
+            padding-top: 125px; /* Aspect Ratio 4:5 styling */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .carousel-track img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background-color: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background-color: var(--accent-gold);
+            width: 12px;
+            border-radius: 3px;
+        }
+
+        .card-details {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            flex-grow: 1;
+        }
+
+        .card-price {
+            color: var(--accent-gold);
+            font-weight: bold;
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+        }
+
+        .card-action-btn {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .card-action-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        /* Consult Panel */
+        .consult-section {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .consult-section h3 {
+            color: var(--accent-gold);
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .consult-section p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .upload-box {
+            border: 2px dashed #333;
+            padding: 30px 20px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: border-color 0.2s;
+            position: relative;
+        }
+
+        .upload-box:hover {
+            border-color: var(--accent-gold);
+        }
+
+        .upload-box input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-preview {
+            max-width: 120px;
+            max-height: 120px;
+            margin: 15px auto 0;
+            display: none;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-select, .form-textarea {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        /* Our Story */
+        .story-section {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            padding-top: 40px;
+        }
+
+        .story-section h3 {
+            color: var(--accent-gold);
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .story-section p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        footer a {
+            color: var(--accent-gold);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="promo-bar">FREE CENTRAL KAMPALA DELIVERY ON ORDERS OVER 150,000 UGX</div>
+        <div class="nav-container">
+            <div class="brand-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <h1>TKNA</h1>
+                <p>Beauty & Events</p>
+            </div>
+            <div class="nav-actions">
+                <button class="bag-btn" onclick="alert('Your shopping bag is clean and premium.')">👜</button>
+                <button class="menu-btn" id="menuToggleBtn">≡</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Side Menu -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    nav class="mobile-menu" id="mobileMenu">
+        <button class="close-menu-btn" id="menuCloseBtn">✕</button>
+        <ul class="menu-links">
+            <li><a href="#" onclick="filterGrid('all')">The Showroom</a></li>
+            <li><a href="#" onclick="filterGrid('clothes')">Premium Clothes</a></li>
+            <li><a href="#" onclick="filterGrid('jewelry')">Statement Jewelry</a></li>
+            <li><a href="#" onclick="filterGrid('scents')">Luxury Scents</a></li>
+            <li><a href="#" onclick="filterGrid('wigs')">Elite Wigs</a></li>
+            <li><a href="#" onclick="filterGrid('events')">Bespoke Events</a></li>
+            <li><a href="#consult">Visual Consult</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Display -->
+    <section class="hero">
+        <h2>"A Limitless Beauty Brand For Life Time Memories"</h2>
+        <p>Curated Curations & Custom Spaces</p>
+        <button class="hero-btn" onclick="document.getElementById('catalog').scrollIntoView({behavior: 'smooth'})">Explore Collections</button>
+    </section>
+
+    <!-- Sticky Navigation Filter Tabs -->
+    <div class="sticky-filter-container">
+        <div class="filter-tabs">
+            <button class="filter-tag active" onclick="filterGrid('all', this)">All</button>
+            <button class="filter-tag" onclick="filterGrid('clothes', this)">Clothes</button>
+            <button class="filter-tag" onclick="filterGrid('jewelry', this)">Jewelry</button>
+            <button class="filter-tag" onclick="filterGrid('scents', this)">Scents</button>
+            <button class="filter-tag" onclick="filterGrid('wigs', this)">Wigs</button>
+            <button class="filter-tag" onclick="filterGrid('events', this)">Events</button>
+        </div>
+    </div>
+
+    <!-- Catalog View -->
+    <section class="catalog-section" id="catalog">
+        <div id="catalog-container">
+            <!-- Dynamic elements inject via JS -->
+        </div>
+    </section>
+
+    <!-- Visual Consult Section -->
+    <section class="consult-section" id="consult">
+        <h3>✨ TKNA Visual Consult</h3>
+        <p>Upload a photo of your dress, hair texture, or layout palette. Our master styling house will curate matching items or bespoke package advice instantly via WhatsApp.</p>
+        
+        <div class="upload-box">
+            <span id="upload-status">📸 Tap to Snap or Upload Look</span>
+            <input type="file" id="consultFile" accept="image/*" onchange="previewImage(event)">
+            <img id="imagePreview" class="upload-preview" alt="Preview">
+        </div>
+
+        <select class="form-select" id="consultCategory">
+            <option value="Jewelry Pairing">Match Perfect Jewelry</option>
+            <option value="Wig Selection">Elite Hair & Wig Advice</option>
+            <option value="Scent Profiling">Discover Your Luxury Scent</option>
+            <option value="Bespoke Event Decor">Negotiate Event Decor Structure</option>
+        </select>
+
+        <textarea class="form-textarea" id="consultNotes" rows="3" placeholder="Tell us about your outfit neckline, theme preferences, or event district..."></textarea>
+        
+        <button class="card-action-btn" style="width: 100%; border-color: var(--accent-gold); color: var(--accent-gold);" onclick="sendVisualConsult()">
+            ✨ Send Layout For Expert Styling Advice
+        </button>
+    </section>
+
+    <!-- Brand Story Section -->
+    <section class="story-section">
+        <h3>The Essence of TKNA</h3>
+        <p>At TKNA, we believe that true elegance isn't just about what you wear—it is about how you are remembered. We curated this platform to be a limitless beauty brand for lifetime memories. Every piece of clothing, every statement jewel, and every fine luxury asset we display is selected to mark an exceptional moment in your journey.</p>
+        <p>Luxury shouldn't be hidden behind heavily filtered, deceptive studio graphics. That is why our boutique showroom is built entirely on a foundation of real, unedited product photography. What you see under natural lighting on our storefront is exactly the weight, texture, and brilliant finish that will arrive at your doorstep.</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 TKNA Beauty & Events. All Rights Reserved.</p>
+        <p>Kampala, Uganda | +256774996609</p>
+    </footer>
+
+    <script>
+        // Premium Mock Data - No Source footprint, Multi-angle Views
+        const products = [
+            {
+                id: 1,
+                name: "Satin Evening Slip",
+                category: "clothes",
+                meta: "Premium high-grade satin silhouette with flawless draping.",
+                price: "120,000 UGX",
+                images: [
+                    "https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=400&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=400&auto=format&fit=crop"
+                ]
+            },
+            {
+                id: 2,
+                name: "The Aurora Gold Band",
+                category: "jewelry",
+                meta: "Macro gold polished finish chunk ring with minimal structure.",
+                price: "75,000 UGX",
+                images: [
+                    "https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=400&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=400&auto=format&fit=crop"
+                ]
+            },
+            {
+                id: 3,
+                name: "Signature Flacon Mist",
+                category: "scents",
+                meta: "Heavy glass column flacon featuring a polished gold crown cap.",
+                price: "250,000 UGX",
+                images: [
+                    "https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=400&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=400&auto=format&fit=crop"
+                ]
+            },
+            {
+                id: 4,
+                name: "Elite Silk Straight Crown",
+                category: "wigs",
+                meta: "Custom HD invisible lace closure with natural heavy density flow.",
+                price: "680,000 UGX",
+                images: [
+                    "https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=400&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1605497746444-ac9da58d440a?q=80&w=400&auto=format&fit=crop"
+                ]
+            },
+            {
+                id: 5,
+                name: "Bespoke Modern Kwanjula Staging",
+                category: "events",
+                meta: "Traditional introduction layout utilizing rich geometry and silk backdrops.",
+                price: "Negotiable",
+                images: [
+                    "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=400&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=400&auto=format&fit=crop"
+                ]
+            },
+            {
+                id: 6,
+                name: "Luxury Corporate Gala Suite",
+                category: "events",
+                meta: "Spotless stage panels, reflective glass staging, and ambient pinpoint lights.",
+                price: "Negotiable",
+                images: [
+                    "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?q=80&w=400&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1478812954026-9c750f0e89fc?q=80&w=400&auto=format&fit=crop"
+                ]
+            }
+        ];
+
+        // Mobile Menu Elements
+        const menuToggleBtn = document.getElementById('menuToggleBtn');
+        const menuCloseBtn = document.getElementById('menuCloseBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+        }
+
+        menuToggleBtn.addEventListener('click', toggleMenu);
+        menuCloseBtn.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', toggleMenu);
+
+        // Render Catalog System
+        function renderCatalog(filter = 'all') {
+            const container = document.getElementById('catalog-container');
+            container.innerHTML = '';
+
+            const categories = filter === 'all' ? ['clothes', 'jewelry', 'scents', 'wigs', 'events'] : [filter];
+
+            categories.forEach(cat => {
+                const filteredList = products.filter(p => p.category === cat);
+                if (filteredList.length === 0) return;
+
+                const sectionHeader = document.createElement('h3');
+                sectionHeader.className = 'category-header';
+                sectionHeader.innerText = cat;
+                container.appendChild(sectionHeader);
+
+                const grid = document.createElement('div');
+                grid.className = 'product-grid';
+
+                filteredList.forEach(prod => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+
+                    // Multi-view Carousel Element
+                    let carouselHtml = `<div class="card-carousel" id="carousel-${prod.id}">
+                        <div class="carousel-track" id="track-${prod.id}">`;
+                    prod.images.forEach(img => {
+                        carouselHtml += `<img src="${img}" alt="${prod.name}">`;
+                    });
+                    carouselHtml += `</div><div class="carousel-dots">`;
+                    prod.images.forEach((_, idx) => {
+                        carouselHtml += `<span class="dot ${idx === 0 ? 'active' : ''}" onclick="moveCarousel(${prod.id}, ${idx})"></span>`;
+                    });
+                    carouselHtml += `</div></div>`;
+
+                    const isEvent = prod.price.toLowerCase() === 'negotiable';
+                    const btnText = isEvent ? '✨ Inquire via WhatsApp' : '👜 Order via WhatsApp';
+                    const orderTemplate = isEvent 
+                        ? `✨ Hello TKNA Beauty & Events! I want to negotiate a package configuration for:
+📌 Style Ref: ${prod.name}
+Please check my upcoming schedule availability!`
+                        : `✨ Hello TKNA! I want to secure this piece from the showroom:
+🏷️ Item: ${prod.name}
+💰 Price: ${prod.price}
+Kindly share validation details.`;
+
+                    const whatsappUrl = `https://wa.me/256774996609?text=${encodeURIComponent(orderTemplate)}`;
+
+                    card.innerHTML = carouselHtml + `
+                        <div class="card-details">
+                            <h4 class="card-title">${prod.name}</h4>
+                            <p class="card-meta">${prod.meta}</p>
+                            <div class="card-price">${isEvent ? 'Price Under Negotiation' : prod.price}</div>
+                            <a href="${whatsappUrl}" target="_blank" class="card-action-btn">${btnText}</a>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                container.appendChild(grid);
+            });
+        }
+
+        // Horizontal Slide Controls for Card Carousel
+        window.moveCarousel = function(prodId, index) {
+            const track = document.getElementById(`track-${prodId}`);
+            const container = document.getElementById(`carousel-${prodId}`);
+            const dots = container.querySelectorAll('.dot');
+            
+            track.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((dot, idx) => {
+                if (idx === index) dot.classList.add('active');
+                else dot.classList.remove('active');
+            });
+        };
+
+        // Tab Filter Switching Trigger
+        window.filterGrid = function(category, element) {
+            if (element) {
+                document.querySelectorAll('.filter-tag').forEach(btn => btn.classList.remove('active'));
+                element.classList.add('active');
+            }
+            renderCatalog(category);
+            if (mobileMenu.classList.contains('active')) {
+                toggleMenu();
+            }
+        }
+
+        // Consult Live Upload Preview Look
+        window.previewImage = function(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const preview = document.getElementById('imagePreview');
+                preview.src = reader.result;
+                preview.style.display = 'block';
+                document.getElementById('upload-status').innerText = "🔄 Image Loaded Perfectly";
+            }
+            if(event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+
+        // Direct WhatsApp Upload Consulting Framework
+        window.sendVisualConsult = function() {
+            const category = document.getElementById('consultCategory').value;
+            const notes = document.getElementById('consultNotes').value;
+            
+            let template = `✨ Hello TKNA Master Stylist! I need an expert styling advice consultation:
+
+`;
+            template += `🎯 Category: ${category}
+`;
+            template += `✍️ Notes/Theme: ${notes ? notes : 'Looking for perfect matching recommendations.'}
+
+`;
+            template += `📲 I am sending my outfit/space image snapshot in the next message attached below!`;
+
+            const whatsappUrl = `https://wa.me/256774996609?text=${encodeURIComponent(template)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Initial Boot Entry
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCatalog('all');
+        });
+    </script>
+</body>
+</html>
